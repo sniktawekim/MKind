@@ -1,0 +1,43 @@
+\\\Needs.txt:
+-In each folder there should be a "Needs.txt"
+-This file is a log of what I need of each type.
+-Notation should include date of need requested.
+-When a need is "completed", mark the original request line with a 
+	\ at the start.
+-Unspecified amount needs (as in, no limit specified) should have sublines
+	for when someone contributes to that need. These lines should
+	begin with a \
+-Partially finished requests should be marked similarly to the unspecified amount needs
+-The need files will be updated with more requests. Each new request
+	will be added to the beginning of the file, pushing the rest down.
+/////////////
+
+\\\Priority.txt
+-In this folder there should be a Priority.txt
+-This file will be updated every time I need something more than
+	others - to help with the stage of programming I am in.
+-This folder will list the requests in order of importance.
+/////////////
+
+
+Example Needs.txt:
+
+11.21.2013---
+	I need a background that looks like you are on the inside of 
+		another ship.
+-------------
+
+11.6.2013--- T Snow (putting name here means you have assigned yourself/are 			
+			working on this task)
+		\11.8.2013 added derpBg.png
+			coolBg.png
+			superBg.png - Tony
+		\11.7.2013 added cometBg.png - Tony
+	I need a bunch moar backgrounds
+------------
+
+\11.5.2013--- Completed 11.6.2013, see 
+		starryBg.png - Tony
+	I need a viable, bland, starry 
+	background (an improved testBg.png)
+------------

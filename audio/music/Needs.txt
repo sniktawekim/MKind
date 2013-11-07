@@ -1,0 +1,42 @@
+11.5.2013---
+	I need a an Intro track. This song will be playing until the player		
+	presses a button. It needs to have a start, and an end. It does not 	
+	need to be able to loop into itself - as there will be silence 
+	between its replaying. This should be between 1 and 3 minutes long.
+------------
+
+11.5.2013---
+	I need a Title track. This will play during the main menu after
+	the player presses a button at the intro. This song should be able		
+	to smootly loop. It should be between 1/2 and 3 minutes long.
+------------
+
+11.5.2013---
+	I need level tracks. These need to loop, and be between 1 and 3 		
+	minutes long. A COUPLE of 1/2 and 5 minute long tracks also need to 	
+	be made. Looping can be made easier if you make 2 tracks, one small 	
+	one for the initial start (which will only play once), and one that 	
+	starts as it ends for the loopback. Another trick to help with 
+	looping would be having the song fade in and out with some 
+	silence/ambient noise at the beginning and end.
+------------
+
+11.5.2013---
+	I need a credits track. This can be really long and should be at 		
+	least 4 minutes long. Will not loop.
+------------
+
+11.5.2013---
+	I need a gameover track. This should be between 10 and 40 seconds 		
+	long, and will not loop.
+------------
+
+11.5.2013---
+	I need a highscore track. This should be between 10 and 30 seconds 		
+	long and needs to loop very smoothly without fading in/out.
+------------
+
+11.5.2013---
+	I need a pause menu track. This can be between 1 and 6 minutes, and 	
+	will loop, but can do so with fading.
+------------

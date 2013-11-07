@@ -1,0 +1,7 @@
+11.5.2013--- M Watkins
+	I need short soundclips. Need to research best filetypes.
+	I need clips for: bullet collisions with enemies, bullet collisions 	
+	with player, beam collisions with enemy, beam ambient noise,
+	rocket ignition noise, crashing noises, dying noises, shop repair 		
+	noises, ship upgrade noises, item collecting noise.
+------------
