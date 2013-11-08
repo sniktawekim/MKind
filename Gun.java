@@ -25,11 +25,11 @@ public class Gun {
         firesLeft = !fireRight;
         enemyBullets = !playerGun;
         fireLocations = locations;
-        if(playerGun){
+        if (playerGun) {
             bulletXSize = 10;
             bulletYSize = 10;
         }
-        
+
     }
 
     /**
@@ -42,8 +42,8 @@ public class Gun {
     /**
      * this method upgrades the front middle fire to be a beam instead of bullet
      */
-    public void addFBeam() {
-        beam = true;
+    public void setFBeam(boolean set) {
+        beam = set;
     }
 
     /**
@@ -93,7 +93,7 @@ public class Gun {
         ArrayList<OnScreenObject> toFire = new ArrayList<>();
         Bullet toAdd;
         if (firesLeft) {
-            toAdd = new Bullet(fireLocations[6], fireLocations[7]-((int)bulletXSize/2), bulletXSize, bulletYSize);
+            toAdd = new Bullet(fireLocations[6], fireLocations[7] - ((int) bulletXSize / 2), bulletXSize, bulletYSize);
             int rise = 0;
             if ((int) (Math.random() * 10) == 1 && (int) (Math.random() * 10) == 1) {
                 rise = 2;
@@ -102,17 +102,29 @@ public class Gun {
             }
             toAdd.setMovement(rise, -3);
         } else {
-            toAdd = new Bullet(fireLocations[8], fireLocations[9]-((int)bulletXSize/2), bulletXSize, bulletYSize);
+            toAdd = new Bullet(fireLocations[8], fireLocations[9] - ((int) bulletXSize / 2), bulletXSize, bulletYSize);
             toAdd.setMovement(0, 5);
         }
         toAdd.setPlayerBullet(!enemyBullets);
 
-        if (currentTime - lastShot > 7||beam) {
+        if (beam) {
+            toAdd.setGraphic("pics/Bullets/pBeam.png");
+            toAdd.setXMin(fireLocations[8] - 25);
+            toAdd.setYMin(fireLocations[9] - 12);
+            toAdd.setXSize(5);
+            toAdd.setYSize(25);
+            toAdd.setMovement(0, 25);
+            toFire.add(toAdd);
+        } else if (currentTime - lastShot > 7) {
             toFire.add(toAdd);
             lastShot = currentTime;
         }
 
         return toFire;
+    }
+
+    void toggleUpgrade() {
+        beam = !beam;
     }
 
 }

@@ -1,4 +1,3 @@
-
 package MKind;
 
 import java.awt.Color;
@@ -7,9 +6,10 @@ import java.awt.Color;
  * @author MWatkins
  */
 public class Bullet extends OnScreenObject {
-static final int px = 1292;
-static final int py = 770;
-boolean playerBullet = true;
+
+    static final int px = 1292;
+    static final int py = 770;
+    boolean playerBullet = true;
 
     Bullet(int startLocX, int startLocY, int xsize, int ysize) {
         super(startLocX, startLocY, xsize, ysize, px, 0, py, 0);
@@ -23,14 +23,13 @@ boolean playerBullet = true;
         }
     }
 
-    public void setPlayerBullet(boolean isPlayerBullet){
-        playerBullet=isPlayerBullet;
+    public void setPlayerBullet(boolean isPlayerBullet) {
+        playerBullet = isPlayerBullet;
         canCollideWithEnemy = playerBullet;
         canCollideWithPlayer = !playerBullet;
-        if(isPlayerBullet){
+        if (isPlayerBullet) {
             setGraphic("pics/Bullets/pBullet1.png");
         }
     }
-
 
 }

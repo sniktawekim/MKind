@@ -14,6 +14,7 @@ public class interactivePanel extends JPanel {
     IClick myClick;//mouse listener, useful for menu options
     Ipress myType;//keyboard listener, for playing the game
     PlayerShip currentShip;
+    int currentShipint = 0;
     private ImageIcon graphic;
     private Image gr;
     boolean gameOver = false;
@@ -64,13 +65,13 @@ public class interactivePanel extends JPanel {
     }
 
     private void paintBackground(Graphics g) {
-        g.setColor(Color.black);
-        g.fillRect(0, 0, getWidth(), getHeight());
-        try {
+        try {//try to paint background image
             graphic = new ImageIcon(this.getClass().getResource("pics/Backgrounds/testBg.png"));
             gr = graphic.getImage();
             g.drawImage(gr, 0, 0, this);
-        } catch (Exception e) {
+        } catch (Exception e) {//if it fails, paint a black rectangle
+            g.setColor(Color.black);
+            g.fillRect(0, 0, getWidth(), getHeight());
             System.out.println("BG Error: " + e);
         }
 
@@ -80,9 +81,9 @@ public class interactivePanel extends JPanel {
         for (int i = 0; i < objects.size(); i++) {
             OnScreenObject current = objects.get(i);
             g.setColor(current.getColor());
-            if (current.getGraphic() != null) {
+            if (current.getGraphic() != null) {//try to paint the object's image
                 g.drawImage(current.getGraphic(), current.getXMin(), current.getYMin(), this);
-            } else {
+            } else {//if it fails to load the image, paint it as a default color
                 g.fillOval(current.getXMin(), current.getYMin(), current.getXSize(), current.getYSize());
             }
         }
@@ -93,28 +94,33 @@ public class interactivePanel extends JPanel {
     }
 
     private void checkPress() {
-        if (myType.getDown()) {
-            objects.get(0).setRise(3);
-        } else if (myType.getUp()) {
-            objects.get(0).setRise(-3);
+        if (myType.getKeyPressed("down")) {//if they pressed down
+            currentShip.move("down");//move ship down
+        } else if (myType.getKeyPressed("up")) {//etc
+            currentShip.move("up");
+        } else {//if neither
+            currentShip.setRise(0);//make ship not move in either direction
+        }
+        if (myType.getKeyPressed("left")) {
+            currentShip.move("left");
+        } else if (myType.getKeyPressed("right")) {
+            currentShip.move("right");
         } else {
-            objects.get(0).setRise(0);
+            currentShip.setRun(0);
         }
-        if (myType.getLeft()) {
-            objects.get(0).setRun(-3);
-        } else if (myType.getRight()) {
-            objects.get(0).setRun(3);
-        } else {
-            objects.get(0).setRun(0);
+        if (myType.getKeyPressed("fire")) {
+            addObjects(currentShip.fire());
         }
-        if (myType.getSpace()) {
-            fire();
+        if (myType.getKeyPressed("switch left")) {
+            //eventually this will switch the current ship you are using
+            //for now, it toggles beam mode.
+            currentShip.getGun().toggleUpgrade();
         }
-    }
-
-    private void fire() {
-        addObjects(currentShip.fire());
-
+        /*
+         if(myType.getKeyPressed("switch right")){
+         handle right switch
+         }
+         */
     }
 
     private void checkCollisions() {
@@ -142,7 +148,7 @@ public class interactivePanel extends JPanel {
     private void checkDeadShip() {
         if (objects.size() > 0) {
             try {
-                currentShip = (PlayerShip) objects.get(0);
+                currentShip = (PlayerShip) objects.get(currentShipint);
             } catch (Exception e) {
                 gameOver = true;
             }

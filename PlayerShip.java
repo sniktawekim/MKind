@@ -9,6 +9,8 @@ import java.awt.Color;
  */
 public class PlayerShip extends Ship {
 
+    int speed = 3;
+
     PlayerShip(int x, int y, int size, int conxMax, int conxMin, int conyMax, int conyMin) {
         super(x, y, size, size, conxMax, conxMin, conyMax, conyMin);
         makeGraphic();
@@ -77,6 +79,31 @@ public class PlayerShip extends Ship {
             skin = (int) (Math.random() * 10);
         }
         setSkin(type, skin);
+    }
+
+    public Gun getGun() {
+        return myGun;
+    }
+
+    public int getSpeed() {
+        return speed;
+    }
+
+    public void move(String direction) {
+        switch (direction) {
+            case "left":
+                setRun(-speed);
+                break;
+            case "right":
+                setRun(speed);
+                break;
+            case "up":
+                setRise(-speed);
+                break;
+            case "down":
+                setRise(speed);
+                break;
+        }
     }
 
 }

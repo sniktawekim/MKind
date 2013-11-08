@@ -41,5 +41,5 @@ public abstract class Ship extends OnScreenObject {
     public ArrayList<OnScreenObject> fire() {
         return myGun.fire();
     }
-        
+
 }

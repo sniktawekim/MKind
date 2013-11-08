@@ -3,16 +3,17 @@ package MKind;
 import java.awt.Color;
 
 /**
- *This specific Ship defines an AI ship
+ * This specific Ship defines an AI ship
+ *
  * @author MWatkins
  */
-public class EnemyShip extends Ship{
-    
-EnemyShip(int x, int y, int size, int conxMax, int conxMin, int conyMax, int conyMin) {
+public class EnemyShip extends Ship {
+
+    EnemyShip(int x, int y, int size, int conxMax, int conxMin, int conyMax, int conyMin) {
         super(x, y, size, size, conxMax, conxMin, conyMax, conyMin);
-        myGun = new Gun(false,false,1,fLocations);
+        myGun = new Gun(false, false, 1, fLocations);
         canCollideWithPlayer = true;
-        
+
         color = Color.red;//default color if there is no graphic
         int skin = -1;
         int type = -1;
@@ -22,19 +23,20 @@ EnemyShip(int x, int y, int size, int conxMax, int conxMin, int conyMax, int con
         while (type < 1 || type > 2) {
             type = (int) (Math.random() * 10);
         }
-        try{
-        setGraphic("pics/EnemyShips/25x25/type" + type + "/eShip" + skin + ".png");
-        } catch(Exception e){
+        try {
+            setGraphic("pics/EnemyShips/25x25/type" + type + "/eShip" + skin + ".png");
+        } catch (Exception e) {
             System.out.println("Enemy Ship Graphic Error: " + e);
         }
     }
-/**
- * this checks if the ship hits the wall, and makes it bounce in
- * the other direction if it does.
- */
+
+    /**
+     * this checks if the ship hits the wall, and makes it bounce in the other
+     * direction if it does.
+     */
     @Override
     protected void checkEdge() {
-        
+
         if ((xmin < containerXMin || getXMax() > containerXMax) && run != 0) {
             run *= -1;
         }
@@ -53,5 +55,4 @@ EnemyShip(int x, int y, int size, int conxMax, int conxMin, int conyMax, int con
         return false; //To change body of generated methods, choose Tools | Templates.
     }
 
-    
 }

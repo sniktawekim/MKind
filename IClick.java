@@ -23,8 +23,8 @@ public class IClick implements MouseListener {
     @Override
     public void mousePressed(MouseEvent e) {
         clicked = true;
-        x = e.getXOnScreen()+xOffset;
-        y = e.getYOnScreen()+yOffset;
+        x = e.getXOnScreen() + xOffset;
+        y = e.getYOnScreen() + yOffset;
     }
 
     @Override
