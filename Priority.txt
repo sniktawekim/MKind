@@ -1,3 +1,8 @@
+11.8.2013---
+	A new background for testing. needs to be same height, but much wider. I would like it to have
+	a few animated gifs on it as well (like twinkling stars) to see how the program can handle it.
+------------
+
 11.5.2013---
 	Initial Menu screen (including menu background and buttons)
 ------------
