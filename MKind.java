@@ -21,7 +21,7 @@ public class MKind {
 
     public static void pause() {
         try {
-            Thread.sleep(10); // wait 5ms
+            Thread.sleep(12); // wait 5ms
             counter2 = !counter2;
             if (counter2) {
                 counter1++;

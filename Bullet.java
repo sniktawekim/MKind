@@ -18,7 +18,7 @@ public class Bullet extends OnScreenObject {
 
     @Override
     protected void checkEdge() {
-        if (xmin < containerXMin || getXMax() > containerXMax || ymin < 0 || getYMax() > containerYMax) {
+        if (getXMax() < containerXMin || xmin > containerXMax || getYMax() < 0 || ymin > containerYMax) {
             setVisible(false);
         }
     }
