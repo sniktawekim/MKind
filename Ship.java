@@ -1,6 +1,8 @@
 package MKind;
 
 import java.util.ArrayList;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 
 /**
  * This class is used to define what a ship needs in order to function with the
@@ -38,7 +40,7 @@ public abstract class Ship extends OnScreenObject {
         fLocations[15] = ymin;
     }
 
-    public ArrayList<OnScreenObject> fire() {
+    public ArrayList<OnScreenObject> fire() throws UnsupportedAudioFileException, LineUnavailableException {
         return myGun.fire();
     }
 

@@ -4,6 +4,10 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
@@ -36,16 +40,24 @@ public class interactivePanel extends JPanel {
         paintBackground(g);
         paintObjects(g);
         checkClick();
-        checkPress();
+        try {
+            checkPress();
+        } catch (LineUnavailableException ex) {
+            Logger.getLogger(interactivePanel.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnsupportedAudioFileException ex) {
+            Logger.getLogger(interactivePanel.class.getName()).log(Level.SEVERE, null, ex);
+        }
 
     }
 
     public boolean update() {
         if (!gameOver) {
-            checkDeadShip();//also sets current ship
+            if(checkDeadShip())//also sets current ship
+                return false;
             updateObjects();//also removes invisible
             checkCollisions();
             return true;
+
         } else {
             return false;
         }
@@ -93,34 +105,37 @@ public class interactivePanel extends JPanel {
         objects.add(toAdd);
     }
 
-    private void checkPress() {
-        if (myType.getKeyPressed("down")) {//if they pressed down
-            currentShip.move("down");//move ship down
-        } else if (myType.getKeyPressed("up")) {//etc
-            currentShip.move("up");
-        } else {//if neither
-            currentShip.setRise(0);//make ship not move in either direction
-        }
-        if (myType.getKeyPressed("left")) {
-            currentShip.move("left");
-        } else if (myType.getKeyPressed("right")) {
-            currentShip.move("right");
-        } else {
-            currentShip.setRun(0);
-        }
-        if (myType.getKeyPressed("fire")) {
-            addObjects(currentShip.fire());
-        }
-        if (myType.getKeyPressed("switch left")) {
+    private void checkPress() throws UnsupportedAudioFileException, LineUnavailableException {
+        if (!gameOver) {
+            if (myType.getKeyPressed("down")) {//if they pressed down
+                currentShip.move("down");//move ship down
+            } else if (myType.getKeyPressed("up")) {//etc
+                currentShip.move("up");
+            } else {//if neither
+                currentShip.setRise(0);//make ship not move in either direction
+            }
+
+            if (myType.getKeyPressed("left")) {
+                currentShip.move("left");
+            } else if (myType.getKeyPressed("right")) {
+                currentShip.move("right");
+            } else {
+                currentShip.setRun(0);
+            }
+            if (myType.getKeyPressed("fire")) {
+                addObjects(currentShip.fire());
+            }
+            if (myType.getKeyPressed("switch left")) {
             //eventually this will switch the current ship you are using
-            //for now, it toggles beam mode.
-            currentShip.getGun().toggleUpgrade();
+                //for now, it toggles beam mode.
+                currentShip.getGun().toggleUpgrade();
+            }
+            /*
+             if(myType.getKeyPressed("switch right")){
+             handle right switch
+             }
+             */
         }
-        /*
-         if(myType.getKeyPressed("switch right")){
-         handle right switch
-         }
-         */
     }
 
     private void checkCollisions() {
@@ -145,17 +160,19 @@ public class interactivePanel extends JPanel {
         }
     }
 
-    private void checkDeadShip() {
+    private boolean checkDeadShip() {
         if (objects.size() > 0) {
             try {
                 currentShip = (PlayerShip) objects.get(currentShipint);
             } catch (Exception e) {
                 gameOver = true;
+                return true;
             }
         }
         if (objects.size() == 1) {
             createEnemyShips();
         }
+        return false;
     }
 
     private void updateObjects() {
@@ -176,7 +193,7 @@ public class interactivePanel extends JPanel {
     }
 
     private void enemyFire(OnScreenObject current) {
-        if ((int) (Math.random() * 10) == 1 && (int) (Math.random() * 10) == 1 && (int) (Math.random() * 10) > 7) {
+        if ((int) (Math.random() * 10) == 1 && (int) (Math.random() * 10) == 1) {
             try {
                 addObjects(((EnemyShip) current).fire());
             } catch (Exception e) {
@@ -185,7 +202,7 @@ public class interactivePanel extends JPanel {
     }
 
     public void createEnemyShips() {//adding 3 enemies to the canvas with each skin.
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 50; i++) {
             int xstart = -1;
             int ystart = -1;
             while (xstart > canvasWidth - 25 || xstart < 201) {
