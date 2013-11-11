@@ -1,0 +1,6 @@
+This is to give the general idea of level 1, when you are leaving a planet.
+I am currently going to use this as the background image for game testing.
+
+I would like a version of this picture that is nicer looking, and about twice as wide, with maybe some more rings around the planet.
+
+I will need some obstacles - broken ships and comets (varying between half the size of the player to 200x200 pixels.

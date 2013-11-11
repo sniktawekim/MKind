@@ -3,6 +3,7 @@ package MKind;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,11 +20,17 @@ public class interactivePanel extends JPanel {
     Ipress myType;//keyboard listener, for playing the game
     PlayerShip currentShip;
     int currentShipint = 0;
+    int i = 0;
     private ImageIcon graphic;
     private Image gr;
+    private ImageIcon graphic2;
+    private Image gr2;
     boolean gameOver = false;
     final int canvasWidth = 1292;
     final int canvasHeight = 770;
+    boolean end = false;
+    boolean secondWave = false;
+    Lev currentLevel;
 
     interactivePanel() {
         setBorder(BorderFactory.createLineBorder(Color.black));
@@ -32,7 +39,7 @@ public class interactivePanel extends JPanel {
         myType = new Ipress();
         this.addMouseListener(myClick);
         this.addKeyListener(myType);
-
+        // buildLevel();
     }
 
     @Override
@@ -41,7 +48,9 @@ public class interactivePanel extends JPanel {
         paintObjects(g);
         checkClick();
         try {
-            checkPress();
+            if (!gameOver) {
+                checkPress();
+            }
         } catch (LineUnavailableException ex) {
             Logger.getLogger(interactivePanel.class.getName()).log(Level.SEVERE, null, ex);
         } catch (UnsupportedAudioFileException ex) {
@@ -52,10 +61,18 @@ public class interactivePanel extends JPanel {
 
     public boolean update() {
         if (!gameOver) {
-            if(checkDeadShip())//also sets current ship
+            if (checkDeadShip())//also sets current ship
+            {
                 return false;
+            }
             updateObjects();//also removes invisible
             checkCollisions();
+            try {
+                currentShip = (PlayerShip) objects.get(0);
+            } catch (Exception e) {
+                gameOver = true;
+                return false;
+            }
             return true;
 
         } else {
@@ -78,11 +95,18 @@ public class interactivePanel extends JPanel {
 
     private void paintBackground(Graphics g) {
         try {//try to paint background image
+            int bgWidthLimit = -5200 + MKind.canvasWidth;
+            if (i > bgWidthLimit) {
+                i -= 2;
+            } else {
+                end = true;
+            }
             graphic = new ImageIcon(this.getClass().getResource("pics/Backgrounds/testBg.png"));
             gr = graphic.getImage();
-            g.drawImage(gr, 0, 0, this);
-        } catch (Exception e) {//if it fails, paint a black rectangle
-            g.setColor(Color.black);
+            g.drawImage(gr, i, 0, this);
+
+        } catch (Exception e) {//if it fails, paint a blue rectangle
+            g.setColor(Color.blue);
             g.fillRect(0, 0, getWidth(), getHeight());
             System.out.println("BG Error: " + e);
         }
@@ -106,36 +130,47 @@ public class interactivePanel extends JPanel {
     }
 
     private void checkPress() throws UnsupportedAudioFileException, LineUnavailableException {
-        if (!gameOver) {
-            if (myType.getKeyPressed("down")) {//if they pressed down
-                currentShip.move("down");//move ship down
-            } else if (myType.getKeyPressed("up")) {//etc
-                currentShip.move("up");
-            } else {//if neither
-                currentShip.setRise(0);//make ship not move in either direction
+        if (objects.size() > 0) {
+            try {
+                currentShip = (PlayerShip) objects.get(currentShipint);
+            } catch (Exception e) {
+                gameOver = true;
+                return;
             }
-
-            if (myType.getKeyPressed("left")) {
-                currentShip.move("left");
-            } else if (myType.getKeyPressed("right")) {
-                currentShip.move("right");
-            } else {
-                currentShip.setRun(0);
-            }
-            if (myType.getKeyPressed("fire")) {
-                addObjects(currentShip.fire());
-            }
-            if (myType.getKeyPressed("switch left")) {
-            //eventually this will switch the current ship you are using
-                //for now, it toggles beam mode.
-                currentShip.getGun().toggleUpgrade();
-            }
-            /*
-             if(myType.getKeyPressed("switch right")){
-             handle right switch
-             }
-             */
+        } else {
+            gameOver = true;
+            return;
         }
+        
+        if (myType.getKeyPressed("down")) {//if they pressed down
+            currentShip.move("down");//move ship down
+        } else if (myType.getKeyPressed("up")) {//etc
+            currentShip.move("up");
+        } else {//if neither
+            currentShip.setRise(0);//make ship not move in either direction
+        }
+
+        if (myType.getKeyPressed("left")) {
+            currentShip.move("left");
+        } else if (myType.getKeyPressed("right")) {
+            currentShip.move("right");
+        } else {
+            currentShip.setRun(0);
+        }
+        if (myType.getKeyPressed("fire")) {
+            addObjects(currentShip.fire());
+        }
+        if (myType.getKeyPressed("switch left")) {
+            //eventually this will switch the current ship you are using
+            //for now, it toggles beam mode.
+            currentShip.getGun().toggleUpgrade();
+        }
+        /*
+         if(myType.getKeyPressed("switch right")){
+         handle right switch
+         }
+         */
+
     }
 
     private void checkCollisions() {
@@ -169,8 +204,13 @@ public class interactivePanel extends JPanel {
                 return true;
             }
         }
-        if (objects.size() == 1) {
-            createEnemyShips();
+        if (objects.size() == 1 && end) {
+            if (!secondWave) {
+                createEnemyShips();
+                secondWave = true;
+            } else {
+                gameOver = true;
+            }
         }
         return false;
     }
@@ -215,5 +255,9 @@ public class interactivePanel extends JPanel {
             eShip.setMovement(1, -1);
             addObject(eShip);
         }
+    }
+
+    public void buildLevel() {//in progress
+        currentLevel = new Lev("pics/Backgrounds/testBg.png", 2600, 1);
     }
 }
