@@ -22,6 +22,7 @@ public class interactivePanel extends JPanel {
     PlayerShip currentShip;
     int currentShipint = 0;
     int i = 0;
+    final int backgroundWidth = 6000;
     private ImageIcon graphic;
     private Image gr;
     private ImageIcon graphic2;
@@ -101,7 +102,7 @@ public class interactivePanel extends JPanel {
 
     private void paintBackground(Graphics g) {
         try {//try to paint background image
-            int bgWidthLimit = -5200 + MKind.canvasWidth;
+            int bgWidthLimit = -backgroundWidth + MKind.canvasWidth;
             boolean wrap = false;
 
             i -= 2;
@@ -109,9 +110,9 @@ public class interactivePanel extends JPanel {
             gr = graphic.getImage();
             g.drawImage(gr, i, 0, this);
             if (i <= bgWidthLimit) {
-                g.drawImage(gr, i+5200, 0, this);
+                g.drawImage(gr, i + backgroundWidth, 0, this);
 
-                if (i+5200<=0) {
+                if (i + backgroundWidth <= 0) {
                     i = 0;
                 }
             }
@@ -280,7 +281,7 @@ public class interactivePanel extends JPanel {
         EnemyShip eShip = new EnemyShip(xstart, ystart, 25, canvasWidth, 200, canvasHeight, 0);
 
         int run = -2;
-        while (run >-6) {
+        while (run > -6) {
             run = (int) (Math.random() * -10);
         }
         eShip.setMovement((int) (Math.random() * 10), run / 3);
