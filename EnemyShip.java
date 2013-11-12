@@ -38,14 +38,14 @@ public class EnemyShip extends Ship {
     protected void checkEdge() {
 
         if (getXMax() < containerXMin) {
-            run = (int)(Math.random()*10)/3;
+            run = (int) (Math.random() * 10) / 3;
         } else if (getXMax() > containerXMax) {
-            run = -1*(int)(Math.random()*10)/3;
+            run = -1 * (int) (Math.random() * 10) / 3;
         }
-        if (ymin < 0 ){
-         rise = (int)(Math.random()*10)/3;   
-        } else if(getYMax() > containerYMax){
-            rise = - 1*(int)(Math.random()*10)/3;
+        if (ymin < 0) {
+            rise = (int) (Math.random() * 10) / 3;
+        } else if (getYMax() > containerYMax) {
+            rise = - 1 * (int) (Math.random() * 10) / 3;
         }
     }
 

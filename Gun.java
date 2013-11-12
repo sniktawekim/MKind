@@ -157,7 +157,7 @@ public class Gun {
                 beamSound.play();
             } else {
                 if (MKind.counter2) {
-               // eBulletSound = new Sound("sounds/eBullet.wav");
+                    // eBulletSound = new Sound("sounds/eBullet.wav");
                     // eBulletSound.play();
                 }
             }
