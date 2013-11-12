@@ -264,7 +264,7 @@ public class interactivePanel extends JPanel {
                 ystart = (int) (Math.random() * 1000);
             }
             EnemyShip eShip = new EnemyShip(xstart, ystart, 25, canvasWidth, 200, canvasHeight, 0);
-            eShip.setMovement(1, -2);
+            eShip.setMovement(1, -1);
             addObject(eShip);
         }
     }

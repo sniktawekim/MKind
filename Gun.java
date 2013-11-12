@@ -120,7 +120,7 @@ public class Gun {
             toAdd.setMovement(rise, -5);
         } else {
             toAdd = new Bullet(fireLocations[8], fireLocations[9] - ((int) bulletXSize / 2), bulletXSize, bulletYSize);
-            toAdd.setMovement(0, -5);
+            toAdd.setMovement(0, 5);
         }
         toAdd.setPlayerBullet(!enemyBullets);
 
@@ -156,14 +156,14 @@ public class Gun {
                 beamSound = new Sound("sounds/pBeam.wav");
                 beamSound.play();
             } else {
-                if(MKind.counter2){
+                if (MKind.counter2) {
                // eBulletSound = new Sound("sounds/eBullet.wav");
-               // eBulletSound.play();
+                    // eBulletSound.play();
                 }
             }
             lastPlay = MKind.counter1;
         }
-        
+
     }
 
 }
