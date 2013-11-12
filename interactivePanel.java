@@ -264,7 +264,7 @@ public class interactivePanel extends JPanel {
                 ystart = (int) (Math.random() * 1000);
             }
             EnemyShip eShip = new EnemyShip(xstart, ystart, 25, canvasWidth, 200, canvasHeight, 0);
-            eShip.setMovement(1, -1);
+            eShip.setMovement(1, -2);
             addObject(eShip);
         }
     }
@@ -280,7 +280,7 @@ public class interactivePanel extends JPanel {
         EnemyShip eShip = new EnemyShip(xstart, ystart, 25, canvasWidth, 200, canvasHeight, 0);
 
         int run = -2;
-        while (run != -2) {
+        while (run >-6) {
             run = (int) (Math.random() * -10);
         }
         eShip.setMovement((int) (Math.random() * 10), run / 3);

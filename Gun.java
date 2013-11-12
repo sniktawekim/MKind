@@ -117,10 +117,10 @@ public class Gun {
             } else if ((int) (Math.random() * 10) == 1 && (int) (Math.random() * 10) == 1) {
                 rise = -2;
             }
-            toAdd.setMovement(rise, -3);
+            toAdd.setMovement(rise, -5);
         } else {
             toAdd = new Bullet(fireLocations[8], fireLocations[9] - ((int) bulletXSize / 2), bulletXSize, bulletYSize);
-            toAdd.setMovement(0, 5);
+            toAdd.setMovement(0, -5);
         }
         toAdd.setPlayerBullet(!enemyBullets);
 
