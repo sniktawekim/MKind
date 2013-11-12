@@ -37,11 +37,15 @@ public class EnemyShip extends Ship {
     @Override
     protected void checkEdge() {
 
-        if ((xmin < containerXMin || getXMax() > containerXMax) && run != 0) {
-            run *= -1;
+        if (getXMax() < containerXMin) {
+            run = (int)(Math.random()*10)/3;
+        } else if (getXMax() > containerXMax) {
+            run = -1*(int)(Math.random()*10)/3;
         }
-        if ((ymin < 0 || getYMax() > containerYMax) && rise != 0) {
-            rise *= -1;
+        if (ymin < 0 ){
+         rise = (int)(Math.random()*10)/3;   
+        } else if(getYMax() > containerYMax){
+            rise = - 1*(int)(Math.random()*10)/3;
         }
     }
 

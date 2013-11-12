@@ -12,6 +12,7 @@ import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
+import sun.audio.AudioPlayer;
 
 public class interactivePanel extends JPanel {
 
@@ -60,6 +61,8 @@ public class interactivePanel extends JPanel {
     }
 
     public boolean update() {
+        int rand10 = ((int) (Math.random() * 10));
+        int rand20 = ((int) (Math.random() * 20));
         if (!gameOver) {
             if (checkDeadShip())//also sets current ship
             {
@@ -68,6 +71,9 @@ public class interactivePanel extends JPanel {
             updateObjects();//also removes invisible
             checkCollisions();
             try {
+                if (MKind.counter2 && rand10 > 8 && rand20 < 20 && objects.size() < 100) {
+                    createShip();
+                }
                 currentShip = (PlayerShip) objects.get(0);
             } catch (Exception e) {
                 gameOver = true;
@@ -96,14 +102,19 @@ public class interactivePanel extends JPanel {
     private void paintBackground(Graphics g) {
         try {//try to paint background image
             int bgWidthLimit = -5200 + MKind.canvasWidth;
-            if (i > bgWidthLimit) {
-                i -= 2;
-            } else {
-                end = true;
-            }
+            boolean wrap = false;
+
+            i -= 2;
             graphic = new ImageIcon(this.getClass().getResource("pics/Backgrounds/testBg.png"));
             gr = graphic.getImage();
             g.drawImage(gr, i, 0, this);
+            if (i <= bgWidthLimit) {
+                g.drawImage(gr, i+5200, 0, this);
+
+                if (i+5200<=0) {
+                    i = 0;
+                }
+            }
 
         } catch (Exception e) {//if it fails, paint a blue rectangle
             g.setColor(Color.blue);
@@ -141,7 +152,7 @@ public class interactivePanel extends JPanel {
             gameOver = true;
             return;
         }
-        
+
         if (myType.getKeyPressed("down")) {//if they pressed down
             currentShip.move("down");//move ship down
         } else if (myType.getKeyPressed("up")) {//etc
@@ -241,10 +252,11 @@ public class interactivePanel extends JPanel {
         }
     }
 
-    public void createEnemyShips() {//adding 3 enemies to the canvas with each skin.
+    public void createEnemyShips() {//adding 50 enemies to the canvas with each skin.
         for (int i = 0; i < 50; i++) {
             int xstart = -1;
             int ystart = -1;
+
             while (xstart > canvasWidth - 25 || xstart < 201) {
                 xstart = (int) (Math.random() * 1000);
             }
@@ -255,6 +267,25 @@ public class interactivePanel extends JPanel {
             eShip.setMovement(1, -1);
             addObject(eShip);
         }
+    }
+
+    public void createShip() {
+        int ystart = -1;
+        int xstart = (int) (Math.random() * 10);
+        xstart = (int) (canvasWidth + 200);
+
+        while (ystart > canvasHeight - 25 || ystart < 0) {
+            ystart = (int) (Math.random() * 1000);
+        }
+        EnemyShip eShip = new EnemyShip(xstart, ystart, 25, canvasWidth, 200, canvasHeight, 0);
+
+        int run = -2;
+        while (run != -2) {
+            run = (int) (Math.random() * -10);
+        }
+        eShip.setMovement((int) (Math.random() * 10), run / 3);
+        addObject(eShip);
+
     }
 
     public void buildLevel() {//in progress
